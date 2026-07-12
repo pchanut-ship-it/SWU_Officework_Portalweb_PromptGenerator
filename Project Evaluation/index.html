@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือสร้าง Prompt วิเคราะห์ผลประเมิน</title>
+    <!-- โหลด Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8">
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <div class="inline-flex items-center justify-center p-3 bg-blue-100 rounded-full mb-2 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+                เครื่องมือสร้าง Prompt วิเคราะห์ผลประเมิน
+            </h1>
+            <p class="text-slate-500 text-lg max-w-2xl mx-auto">
+                กรอกข้อมูลเบื้องต้นและกด "สร้าง Prompt" เพื่อเตรียมข้อมูล จากนั้นคัดลอกและนำไปใช้กับ AI อย่าง ChatGPT, Claude หรือ Gemini ได้เลย
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-12 gap-6 items-start mt-8">
+            
+            <!-- Left Column: Form Setup -->
+            <div class="md:col-span-5 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold flex items-center gap-2 mb-4 text-slate-800">
+                        <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                        ตั้งค่าข้อมูลโครงการ
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">
+                                ชื่อโครงการ / กิจกรรม
+                            </label>
+                            <input
+                                type="text"
+                                id="projectName"
+                                placeholder="เช่น โครงการอบรมทักษะดิจิทัล 2024"
+                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">
+                                สเกลคะแนนที่ใช้
+                            </label>
+                            <input
+                                type="text"
+                                id="scoreScale"
+                                placeholder="เช่น 1-5 หรือ 1-10"
+                                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-blue-50 p-4 rounded-xl border border-blue-100 flex gap-3 text-sm text-blue-800">
+                        <svg class="shrink-0 text-blue-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                        <p>
+                            <strong>ขั้นตอนการใช้งาน:</strong> <br/>
+                            1. กรอกข้อมูลให้ครบ <br/>
+                            2. กด <b>"สร้าง Prompt สำหรับ AI"</b> <br/>
+                            3. กด <b>"คัดลอก Prompt"</b> และนำไปวางใน AI พร้อมแนบไฟล์ Excel
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col gap-3">
+                    <!-- ปุ่มที่ 1: สร้าง Prompt สำหรับ AI -->
+                    <button
+                        id="generateBtn"
+                        class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-lg shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/30"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h.01"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>
+                        สร้าง Prompt สำหรับ AI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Preview -->
+            <div class="md:col-span-7">
+                <div id="previewContainer" class="bg-[#1e293b] rounded-2xl shadow-xl border border-slate-700 overflow-hidden flex flex-col h-[600px] transition-all duration-300">
+                    <div class="bg-slate-800 px-4 py-3 border-b border-slate-700 flex items-center justify-between">
+                        <h2 class="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                            ตัวอย่าง Prompt ที่จะได้
+                        </h2>
+                        <!-- ปุ่มที่ 2: คัดลอก Prompt ไปใช้งาน (ย้ายมาอยู่ขวาบน) -->
+                        <button
+                            id="copyBtn"
+                            class="flex items-center justify-center gap-1.5 py-1.5 px-4 rounded-lg font-bold text-sm transition-all duration-200 hover:-translate-y-0.5 bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
+                        >
+                            <span id="copyIcon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            </span>
+                            <span id="copyText">คัดลอก Prompt</span>
+                        </button>
+                    </div>
+                    <div id="promptPreview" class="p-6 overflow-y-auto flex-1 text-slate-300 font-mono text-sm leading-relaxed whitespace-pre-wrap"></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectNameInput = document.getElementById('projectName');
+            const scoreScaleInput = document.getElementById('scoreScale');
+            const promptPreview = document.getElementById('promptPreview');
+            const previewContainer = document.getElementById('previewContainer');
+            
+            const generateBtn = document.getElementById('generateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const copyText = document.getElementById('copyText');
+            const copyIcon = document.getElementById('copyIcon');
+
+            // ฟังก์ชันสำหรับสร้างข้อความ Prompt
+            function getPromptText() {
+                const pName = projectNameInput.value.trim() !== '' ? projectNameInput.value.trim() : '[ระบุชื่อโครงการ/กิจกรรม]';
+                const sScale = scoreScaleInput.value.trim() !== '' ? scoreScaleInput.value.trim() : '[เช่น 1–5 หรือ 1–10]';
+
+                return `## บทบาทและเป้าหมาย
+คุณคือนักวิเคราะห์ข้อมูลด้านการศึกษาที่เชี่ยวชาญการสรุปผลประเมินโครงการ
+เป้าหมาย: วิเคราะห์ผลการประเมินจากไฟล์ที่แนบมา แล้วนำเสนอสรุปผลอย่างครบถ้วน ชัดเจน และนำไปใช้งานได้จริง
+
+---
+
+## ข้อมูลที่ต้องการ (กรอกก่อนใช้)
+- ชื่อโครงการ/กิจกรรม: ${pName}
+- สเกลคะแนนที่ใช้: ${sScale}
+
+---
+
+## ไฟล์ข้อมูล
+แนบไฟล์ผลการประเมิน (Excel / CSV / Google Sheet) พร้อม prompt นี้
+
+> หากไฟล์มีหลาย sheet ให้วิเคราะห์ทุก sheet แล้วระบุชื่อ sheet กำกับแต่ละส่วน
+> หากชื่อคอลัมน์ไม่ชัดเจน ให้ตีความตามบริบท แล้วแจ้งสมมติฐานที่ใช้
+
+---
+
+## สิ่งที่ต้องการให้วิเคราะห์และนำเสนอ
+
+### ส่วนที่ 1 — ภาพรวมการตอบแบบประเมิน
+- จำนวนผู้ตอบทั้งหมด
+- ช่วงเวลาที่ตอบ (ถ้ามีข้อมูล timestamp)
+
+### ส่วนที่ 2 — สถิติเชิงปริมาณ (สำหรับหัวข้อที่ใช้คะแนน)
+นำเสนอในรูปตาราง โดยมีคอลัมน์:
+| หัวข้อการประเมิน | ค่าเฉลี่ย | คะแนนสูงสุด | คะแนนต่ำสุด | ร้อยละของคะแนนเต็ม | ระดับการประเมิน |
+
+พร้อมกำหนด "ระดับการประเมิน" ตามสเกลที่ใช้จริง เช่น:
+- สเกล 1–5: 4.51–5.00 = ดีมาก / 3.51–4.50 = ดี / 2.51–3.50 = ปานกลาง / ต่ำกว่า = ควรปรับปรุง
+
+### ส่วนที่ 3 — สรุปความคิดเห็นเชิงคุณภาพ
+วิเคราะห์ข้อความปลายเปิดทั้งหมด แล้วแบ่งเป็น:
+- ✅ จุดแข็ง / สิ่งที่ผู้เข้าร่วมพึงพอใจ (พร้อมตัวอย่างคำพูดที่พบบ่อย)
+- 🔧 ข้อเสนอแนะ / สิ่งที่ต้องการเห็นเพิ่มเติม
+- ⚠️ ประเด็นที่ควรปรับปรุงในครั้งต่อไป
+
+### ส่วนที่ 4 — การวิเคราะห์แนวโน้ม
+- หัวข้อที่ได้คะแนนสูงสุด 3 อันดับ (พร้อมค่าเฉลี่ย)
+- หัวข้อที่ได้คะแนนต่ำสุด 3 อันดับ (พร้อมคำแนะนำเบื้องต้น)
+- ประเด็นที่พบซ้ำในความคิดเห็น (Theme ที่ปรากฏ 3 ครั้งขึ้นไป)
+
+### ส่วนที่ 5 — บทสรุปและข้อเสนอแนะเชิงนโยบาย
+เขียนสรุปภาพรวม 1 ย่อหน้า (3–5 ประโยค) ที่ผู้บริหารอ่านแล้วเข้าใจได้ทันที
+พร้อมข้อเสนอแนะที่นำไปปฏิบัติได้จริง 3–5 ข้อ
+
+---
+
+## รูปแบบการนำเสนอ
+- ใช้ภาษาที่กำหนดในส่วน "ข้อมูลที่ต้องการ"
+- นำเสนอเป็น section ชัดเจน มีหัวข้อกำกับทุกส่วน
+- ถ้าข้อมูลบางส่วนไม่ครบ ให้แจ้งและข้ามไปได้ อย่าสมมติตัวเลขขึ้นมาเอง
+- ถ้าพบข้อมูลผิดปกติ (เช่น ค่า outlier หรือการตอบไม่สมบูรณ์) ให้ระบุและอธิบาย
+
+---
+
+เมื่อวิเคราะห์และนำเสนอผลครบทุกส่วนแล้ว ให้ถามผู้ใช้ว่า ต้องการให้สร้างภาพสรุปข้อมูลสำหรับผู้บริหารหรือไม่`;
+            }
+
+            // แสดงผลครั้งแรกเมื่อเปิดหน้าเว็บ
+            promptPreview.textContent = getPromptText();
+
+            // จัดการ Event เมื่อกดปุ่ม "สร้าง Prompt สำหรับ AI"
+            generateBtn.addEventListener('click', () => {
+                promptPreview.textContent = getPromptText();
+                
+                // เพิ่ม Effect กระพริบให้กล่อง Preview
+                previewContainer.classList.add('ring-4', 'ring-blue-500/50');
+                setTimeout(() => {
+                    previewContainer.classList.remove('ring-4', 'ring-blue-500/50');
+                }, 300);
+            });
+
+            // จัดการ Event เมื่อกดปุ่ม "คัดลอก Prompt"
+            copyBtn.addEventListener('click', () => {
+                // อัปเดตข้อมูลล่าสุดเผื่อผู้ใช้ลืมกดปุ่มสร้างก่อน
+                const textToCopy = getPromptText();
+                promptPreview.textContent = textToCopy;
+
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(showSuccessState)
+                        .catch(err => fallbackCopy(textToCopy));
+                } else {
+                    fallbackCopy(textToCopy);
+                }
+            });
+
+            function fallbackCopy(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.position = "fixed";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showSuccessState();
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                }
+                document.body.removeChild(textArea);
+            }
+
+            // แสดงสถานะ "คัดลอกสำเร็จแล้ว!"
+            function showSuccessState() {
+                const originalText = copyText.textContent;
+                const originalIcon = copyIcon.innerHTML;
+
+                copyText.textContent = "สำเร็จแล้ว!";
+                copyIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+                copyBtn.classList.replace('bg-emerald-500', 'bg-green-600');
+                copyBtn.classList.replace('hover:bg-emerald-600', 'hover:bg-green-700');
+                
+                setTimeout(() => {
+                    copyText.textContent = originalText;
+                    copyIcon.innerHTML = originalIcon;
+                    copyBtn.classList.replace('bg-green-600', 'bg-emerald-500');
+                    copyBtn.classList.replace('hover:bg-green-700', 'hover:bg-emerald-600');
+                }, 2500);
+            }
+        });
+    </script>
+</body>
+</html>
