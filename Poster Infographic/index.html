@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Generator - โปสเตอร์ & Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden fade-in border border-slate-100">
+        
+        <div class="bg-slate-50 px-8 py-8 border-b border-slate-100 text-center">
+            <h1 class="text-3xl font-bold mb-2 gradient-text">AI Poster & Infographic Prompt Generator</h1>
+            <p class="text-slate-500 text-sm md:text-base">เครื่องมือช่วยสร้าง Prompt สำหรับ AI เพื่อออกแบบโปสเตอร์หรือ Infographic อย่างมืออาชีพ</p>
+        </div>
+
+        <div class="p-8">
+            <form id="promptForm" class="space-y-6">
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">ประเภทภาพที่ต้องการสร้าง <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+                            <input type="radio" name="imageType" value="Poster" class="peer sr-only" checked>
+                            <span class="flex flex-1">
+                                <span class="flex flex-col">
+                                    <span class="block text-sm font-medium text-slate-900">โปสเตอร์ (Poster)</span>
+                                    <span class="mt-1 flex items-center text-xs text-slate-500">สำหรับโปรโมทงาน หรือกิจกรรม</span>
+                                </span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+                            <input type="radio" name="imageType" value="Infographic" class="peer sr-only">
+                            <span class="flex flex-1">
+                                <span class="flex flex-col">
+                                    <span class="block text-sm font-medium text-slate-900">Infographic</span>
+                                    <span class="mt-1 flex items-center text-xs text-slate-500">สำหรับสรุปข้อมูล สถิติ หรือขั้นตอน</span>
+                                </span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="topic" class="block text-sm font-medium text-slate-700 mb-1">เรื่อง / หัวข้อ <span class="text-red-500">*</span></label>
+                    <input type="text" id="topic" name="topic" required placeholder="เช่น รับสมัครนักศึกษาใหม่ ปีการศึกษา 2568, แนะนำบริการห้องสมุด 24 ชม." 
+                        class="block w-full rounded-md border-slate-300 py-3 px-4 text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm bg-slate-50 border transition duration-150">
+                    <p class="mt-1 text-xs text-slate-500">หัวข้อสั้นๆ กระชับ เพื่อให้ AI เข้าใจจุดประสงค์หลัก</p>
+                </div>
+
+                <div>
+                    <label for="content" class="block text-sm font-medium text-slate-700 mb-1">เนื้อหาหลัก / ข้อมูลสำคัญ <span class="text-red-500">*</span></label>
+                    <textarea id="content" name="content" rows="4" required placeholder="เช่น สมัครได้ตั้งแต่วันที่ 1-30 ตุลาคมนี้, ฟรีค่าธรรมเนียมแรกเข้า, มีทุนการศึกษาให้เรียนฟรีตลอดหลักสูตร..." 
+                        class="block w-full rounded-md border-slate-300 py-3 px-4 text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm bg-slate-50 border transition duration-150"></textarea>
+                    <p class="mt-1 text-xs text-slate-500">ระบุข้อความหรือข้อมูลสำคัญที่ต้องมีในภาพ</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">สไตล์ภาพ (Art Style) <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="minimal" class="peer sr-only" checked>
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">มินิมอล (Minimalist)</span>
+                                <span class="mt-1 text-xs text-slate-500">เรียบง่าย สะอาดตา พื้นที่ว่างเยอะ</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="3d" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">3D ทันสมัย (3D Render)</span>
+                                <span class="mt-1 text-xs text-slate-500">มีมิติ แสงเงาสวยงาม ดูน่ารัก/สมจริง</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="corporate" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">องค์กร (Corporate)</span>
+                                <span class="mt-1 text-xs text-slate-500">ทางการ น่าเชื่อถือ เป็นมืออาชีพ</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="vector" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">กราฟิกเวกเตอร์ (Vector)</span>
+                                <span class="mt-1 text-xs text-slate-500">ลายเส้นคมชัด 2D Flat Design</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="pastel" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">สีน้ำ/พาสเทล (Pastel)</span>
+                                <span class="mt-1 text-xs text-slate-500">โทนสีนุ่มนวล ละมุนตา อบอุ่น</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="scifi" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">เทคโนโลยี (Sci-Fi)</span>
+                                <span class="mt-1 text-xs text-slate-500">ล้ำยุค โทนแสงนีออน ไซเบอร์</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <!-- เพิ่มสไตล์ใหม่ -->
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="realistic" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">ภาพถ่าย (Realistic)</span>
+                                <span class="mt-1 text-xs text-slate-500">สมจริง คมชัดเหมือนถ่ายภาพ</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="anime" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">อนิเมะ (Anime)</span>
+                                <span class="mt-1 text-xs text-slate-500">ลายเส้นการ์ตูน สดใส น่ารัก</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="vintage" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">วินเทจ (Vintage)</span>
+                                <span class="mt-1 text-xs text-slate-500">คลาสสิก ย้อนยุค โทนสีอบอุ่น</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <!-- อื่นๆ -->
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none hover:bg-slate-50 transition">
+                            <input type="radio" name="artStyle" value="other" class="peer sr-only">
+                            <span class="flex flex-col">
+                                <span class="block text-sm font-medium text-slate-900">อื่นๆ (ระบุเอง)</span>
+                                <span class="mt-1 text-xs text-slate-500">พิมพ์สไตล์ที่คุณต้องการ</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                    </div>
+
+                    <!-- ช่องกรอกข้อความสำหรับสไตล์อื่นๆ (ซ่อนไว้เป็นค่าเริ่มต้น) -->
+                    <div id="customStyleContainer" class="mt-3 hidden fade-in">
+                        <input type="text" id="customStyleInput" placeholder="เช่น Pop Art, Cyberpunk, ดินปั้น 3D, ลายเส้นพู่กันจีน..." 
+                            class="block w-full rounded-md border-slate-300 py-3 px-4 text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm bg-blue-50/50 border transition duration-150">
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <label class="block text-sm font-medium text-slate-900 mb-3">การจัดการโลโก้หน่วยงาน (Logo) <span class="text-red-500">*</span></label>
+                    <div class="space-y-3">
+                        <label class="relative flex cursor-pointer items-start">
+                            <div class="flex h-6 items-center">
+                                <input type="radio" name="logoOption" value="space" class="h-4 w-4 border-slate-300 text-blue-600 focus:ring-blue-600">
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <span class="font-medium text-slate-900">ต้องการเว้นพื้นที่สำหรับใส่โลโก้หน่วยงาน</span>
+                                <p class="text-slate-500 text-xs">AI จะออกแบบโดยเว้นพื้นที่ว่างไว้ให้คุณนำโลโก้มาแปะทับได้ภายหลัง</p>
+                            </div>
+                        </label>
+                        <label class="relative flex cursor-pointer items-start">
+                            <div class="flex h-6 items-center">
+                                <input type="radio" name="logoOption" value="upload" class="h-4 w-4 border-slate-300 text-blue-600 focus:ring-blue-600">
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <span class="font-medium text-slate-900">ต้องการอัปโหลดโลโก้ด้วย เพื่อให้ AI นำไปสร้างทันที</span>
+                                <p class="text-slate-500 text-xs">Prompt จะมีคำแนะนำแจ้งเตือนให้คุณแนบไฟล์โลโก้ไปพร้อมกับคำสั่ง</p>
+                            </div>
+                        </label>
+                        <label class="relative flex cursor-pointer items-start">
+                            <div class="flex h-6 items-center">
+                                <input type="radio" name="logoOption" value="none" class="h-4 w-4 border-slate-300 text-blue-600 focus:ring-blue-600" checked>
+                            </div>
+                            <div class="ml-3 text-sm leading-6">
+                                <span class="font-medium text-slate-900">ไม่ต้องมีโลโก้</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">สัดส่วนภาพ (Aspect Ratio) <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <!-- 1:1 -->
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none text-center justify-center">
+                            <input type="radio" name="aspectRatio" value="--ar 1:1" class="peer sr-only">
+                            <span class="flex flex-col items-center">
+                                <span class="w-8 h-8 border-2 border-slate-300 mb-1 rounded-sm"></span>
+                                <span class="block text-xs font-medium text-slate-900">1:1 (Square)</span>
+                                <span class="text-[10px] text-slate-500">IG / Facebook Post</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <!-- 16:9 -->
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none text-center justify-center">
+                            <input type="radio" name="aspectRatio" value="--ar 16:9" class="peer sr-only">
+                            <span class="flex flex-col items-center">
+                                <span class="w-12 h-7 border-2 border-slate-300 mb-2 mt-1 rounded-sm"></span>
+                                <span class="block text-xs font-medium text-slate-900">16:9 (Landscape)</span>
+                                <span class="text-[10px] text-slate-500">Presentation / Web</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                        <!-- 9:16 -->
+                        <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none text-center justify-center">
+                            <input type="radio" name="aspectRatio" value="--ar 9:16" class="peer sr-only" checked>
+                            <span class="flex flex-col items-center">
+                                <span class="w-5 h-9 border-2 border-slate-300 mb-1 rounded-sm"></span>
+                                <span class="block text-xs font-medium text-slate-900">9:16 (Portrait)</span>
+                                <span class="text-[10px] text-slate-500">Story / Reels / Tiktok</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                         <!-- 4:5 -->
+                         <label class="relative flex cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none text-center justify-center">
+                            <input type="radio" name="aspectRatio" value="--ar 4:5" class="peer sr-only">
+                            <span class="flex flex-col items-center">
+                                <span class="w-6 h-8 border-2 border-slate-300 mb-1 rounded-sm"></span>
+                                <span class="block text-xs font-medium text-slate-900">4:5 (Vertical)</span>
+                                <span class="text-[10px] text-slate-500">Facebook / IG Feed</span>
+                            </span>
+                            <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-blue-500" aria-hidden="true"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-[1.01]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        สร้าง Prompt สำหรับ AI
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="resultSection" class="hidden bg-slate-900 text-white p-8 border-t border-slate-800">
+            <h3 class="text-lg font-medium text-white mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Prompt ที่สร้างสำเร็จ
+            </h3>
+            
+            <div>
+                <textarea id="generatedPrompt" readonly rows="10" class="block w-full rounded-md bg-slate-800 border-slate-700 py-3 px-4 text-sm text-slate-300 focus:border-slate-500 focus:ring-slate-500 font-mono resize-none"></textarea>
+                
+                <button id="copyBtn" class="mt-4 w-full flex justify-center items-center py-4 px-4 border border-transparent rounded-lg shadow-lg text-base font-bold text-slate-900 bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-green-500 transition-all duration-200 transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    คัดลอก Prompt นำไปใช้งานได้เลย
+                </button>
+            </div>
+            
+            <div id="copyToast" class="hidden mt-4 text-center text-sm font-medium text-green-400 opacity-0 transition-opacity duration-300 bg-green-400/10 py-2 rounded-md">
+                ✅ คัดลอก Prompt แล้ว! นำไปวางใน ChatGPT, Gemini, Copilot หรือ AI สร้างภาพอื่นๆ ได้เลย
+            </div>
+
+            <!-- คำแนะนำเพิ่มเติม -->
+            <div class="mt-6 p-4 bg-slate-800 rounded-lg text-sm text-slate-400 border border-slate-700">
+                <strong class="text-slate-300 block mb-1">💡 คำแนะนำการใช้งาน:</strong>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Prompt นี้ถูกปรับมาเพื่อให้เหมาะสมกับ <span class="text-white">ChatGPT (DALL-E 3), Copilot (Designer) และ Gemini</span> โดยเน้นการสั่งให้ "สร้างภาพ" พร้อมจัดวางเลย์เอาต์</li>
+                    <li>หากต้องการนำไปใช้กับ <strong>Midjourney</strong> ระบบจะมีการใส่พารามิเตอร์ (เช่น <code class="text-blue-300 bg-slate-900 px-1 py-0.5 rounded">--ar 16:9</code>) ต่อท้ายไว้ให้เป็นทางเลือกเช่นกัน</li>
+                    <li>หากเลือกอัปโหลดโลโก้ อย่าลืม <span class="text-yellow-400">แนบไฟล์รูปภาพโลโก้</span> ในช่องแชทของ AI ก่อนกดส่ง Prompt</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('promptForm');
+        const resultSection = document.getElementById('resultSection');
+        const generatedPrompt = document.getElementById('generatedPrompt');
+        const copyBtn = document.getElementById('copyBtn');
+        const copyToast = document.getElementById('copyToast');
+
+        // จัดการการแสดงผลช่องกรอกสไตล์แบบระบุเอง (Other)
+        const artStyleRadios = document.querySelectorAll('input[name="artStyle"]');
+        const customStyleContainer = document.getElementById('customStyleContainer');
+        const customStyleInput = document.getElementById('customStyleInput');
+
+        artStyleRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'other') {
+                    customStyleContainer.classList.remove('hidden');
+                    customStyleInput.required = true;
+                    customStyleInput.focus();
+                } else {
+                    customStyleContainer.classList.add('hidden');
+                    customStyleInput.required = false;
+                    customStyleInput.value = ''; // เคลียร์ค่าเดิมทิ้ง
+                }
+            });
+        });
+
+        // Handle Form Submission
+        form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Get values
+                const imageType = document.querySelector('input[name="imageType"]:checked').value;
+                const topic = document.getElementById('topic').value.trim();
+                const content = document.getElementById('content').value.trim();
+                const artStyle = document.querySelector('input[name="artStyle"]:checked').value;
+                const logoOption = document.querySelector('input[name="logoOption"]:checked').value;
+                const aspectRatio = document.querySelector('input[name="aspectRatio"]:checked').value;
+
+                // Map Aspect Ratio for LLMs
+                let aspectRatioText = "";
+                if (aspectRatio === '--ar 1:1') aspectRatioText = "สี่เหลี่ยมจัตุรัส (Square 1:1)";
+                else if (aspectRatio === '--ar 16:9') aspectRatioText = "แนวนอน (Landscape 16:9)";
+                else if (aspectRatio === '--ar 9:16') aspectRatioText = "แนวตั้ง (Portrait 9:16)";
+                else if (aspectRatio === '--ar 4:5') aspectRatioText = "แนวตั้ง (Vertical 4:5)";
+
+                // Generate Prompt Strategy
+                let promptBase = `โปรดสร้างภาพ (Generate an image) สำหรับใช้เป็น ${imageType === 'Poster' ? 'โปสเตอร์ (Poster)' : 'อินโฟกราฟิก (Infographic)'} โดยมีรายละเอียดดังนี้:\n\n`;
+                
+                promptBase += `หัวข้อ/ธีมหลัก (Theme): "${topic}"\n\n`;
+
+                promptBase += `เนื้อหาหลัก / ข้อมูลสำคัญที่ต้องสื่อสาร (Key Content & Information):\n`;
+                promptBase += `"${content}"\n`;
+                promptBase += `(โปรดวาดภาพประกอบให้สอดคล้องกับเรื่องนี้ และนำข้อความเนื้อหาหลักเหล่านี้ไปจัดวางลงในภาพให้โดดเด่น สวยงาม และอ่านง่ายแบบ Typography)\n\n`;
+                
+                // Map Art Style
+                let styleDescription = "";
+                switch (artStyle) {
+                    case 'minimal': styleDescription = "สไตล์มินิมอล (Minimalist), เรียบง่าย สะอาดตา, เน้นการใช้พื้นที่ว่าง (Negative space) ให้ดูโล่งโปร่ง, โทนสีสบายตา"; break;
+                    case '3d': styleDescription = "สไตล์ 3D Render (เช่น 3D Pixar หรือ Modern 3D icon), ดูมีมิติและน่ารัก, แสงและเงาสวยงามสมจริง คมชัดระดับ 8k"; break;
+                    case 'corporate': styleDescription = "สไตล์องค์กร/ธุรกิจ (Corporate/Professional), ดูน่าเชื่อถือ เป็นทางการ, โทนสีสุภาพและคุมโทน, การจัดวางองค์ประกอบเป็นระเบียบ"; break;
+                    case 'vector': styleDescription = "สไตล์กราฟิกเวกเตอร์ (Vector Flat Design / 2D Illustration), ลายเส้นกราฟิกคมชัด, สีสันสดใสสะดุดตา, ดูร่วมสมัยแบบงานดิจิทัลอาร์ต"; break;
+                    case 'pastel': styleDescription = "สไตล์สีน้ำหรือพาสเทล (Watercolor/Pastel), โทนสีนุ่มนวล ละมุนตา, ดูอบอุ่นและเป็นมิตร, ให้ความรู้สึกเบาสบาย"; break;
+                    case 'scifi': styleDescription = "สไตล์เทคโนโลยี/ไซไฟ (Sci-Fi/Cyberpunk), ล้ำยุคและทันสมัย, โทนสีเข้มตัดกับแสงไฟนีออนสว่างจ้า, มีเส้นสายหรือกราฟิกแบบดิจิทัล/อนาคต"; break;
+                    case 'realistic': styleDescription = "สไตล์ภาพถ่ายสมจริง (Realistic/Photography), ภาพคมชัดระดับ 8K, แสงเงาและพื้นผิวสมจริงเหมือนถ่ายด้วยกล้องระดับโปร"; break;
+                    case 'anime': styleDescription = "สไตล์อนิเมะ/มังงะ (Anime/Manga style), ลายเส้นแบบการ์ตูน, สดใสและมีชีวิตชีวา การจัดองค์ประกอบภาพดูน่าสนใจ"; break;
+                    case 'vintage': styleDescription = "สไตล์วินเทจ/เรโทร (Vintage/Retro), โทนสีอบอุ่นแบบคลาสสิก, ให้ความรู้สึกย้อนยุคแต่มีเสน่ห์"; break;
+                    case 'other': 
+                        const customStyle = document.getElementById('customStyleInput').value.trim();
+                        styleDescription = `สไตล์ ${customStyle} (กรุณาวาดให้ออกมาเป็นสไตล์นี้อย่างชัดเจน โดดเด่น และสวยงาม)`; 
+                        break;
+                }
+
+            if (imageType === 'Poster') {
+                    promptBase += `สไตล์ภาพ (Art Style): ${styleDescription}, จัดองค์ประกอบภาพอย่างสวยงาม (Good composition), และที่สำคัญคือต้องมีการเว้นพื้นที่ว่าง (Negative space) ไว้เพื่อเตรียมสำหรับการนำไปใส่ข้อความต่อ\n\n`;
+                } else if (imageType === 'Infographic') {
+                    promptBase += `สไตล์ภาพ (Art Style): ${styleDescription}, ออกแบบเป็นภาพพื้นหลังหรือเลย์เอาต์อินโฟกราฟิก, แบ่งสัดส่วนของภาพเป็นส่วนๆ อย่างเป็นระเบียบ (Visual hierarchy) เพื่อให้นำไปใส่ข้อความ/สถิติได้ง่าย, ดูสะอาดตาและเป็นมืออาชีพ\n\n`;
+                }
+
+                // Handling Logo Options
+                if (logoOption === 'space') {
+                    promptBase += `ข้อกำหนดเรื่องโลโก้ (Logo Placement): โปรดสร้างพื้นที่ว่าง (Placeholder) รูปวงกลมหรือสี่เหลี่ยมแบบเนียนๆ ไว้ที่มุมใดมุมหนึ่งของภาพ เพื่อเตรียมไว้สำหรับการนำโลโก้หน่วยงานมาแปะทับในภายหลัง\n\n`;
+                } else if (logoOption === 'upload') {
+                    promptBase += `[⚠️ คำแนะนำก่อนกดส่ง: โปรดแนบไฟล์รูปภาพโลโก้หน่วยงานของคุณไปพร้อมกับคำสั่งนี้]\n`;
+                    promptBase += `ข้อกำหนดเรื่องโลโก้ (Logo Placement): โปรดนำ "รูปภาพโลโก้" ที่แนบมาด้วยนี้ ไปจัดวางประกอบในภาพให้ดูเป็นธรรมชาติ กลมกลืน และเข้ากับดีไซน์โดยรวม\n\n`;
+                } else {
+                    promptBase += `ข้อกำหนดเรื่องโลโก้: ไม่ต้องใส่โลโก้ใดๆ ในภาพ\n\n`;
+                }
+
+                promptBase += `สัดส่วนภาพที่ต้องการ (Aspect Ratio): ${aspectRatioText}\n`;
+                promptBase += `\n(หมายเหตุถึง AI: โปรดพยายามเขียนตัวหนังสือ (Text) ตามที่ระบุไว้ในเนื้อหาหลักลงไปในภาพให้ถูกต้อง และจัดวาง Typography ให้สวยงามเข้ากับภาพมากที่สุด)`;
+                
+                // Append Aspect Ratio for Midjourney as fallback
+                promptBase += `\n\n-- สำหรับผู้ใช้ Midjourney สามารถก๊อปปี้คำสั่งด้านล่างนี้ต่อท้ายได้เลย --\n${aspectRatio} --v 6.0`;
+
+                // Show Result
+                generatedPrompt.value = promptBase;
+                resultSection.classList.remove('hidden');
+                
+                // Smooth scroll to result
+                resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Reset copy toast state if it was shown
+                copyToast.classList.add('hidden');
+                copyToast.classList.remove('opacity-100');
+            });
+
+            // Handle Copy Button
+            copyBtn.addEventListener('click', () => {
+                // Select and copy text
+                generatedPrompt.select();
+                document.execCommand('copy');
+                
+                // Unselect text after copy
+                window.getSelection().removeAllRanges();
+
+                // Show success toast
+                copyToast.classList.remove('hidden');
+                // Small delay to allow display:block to apply before transition
+                setTimeout(() => {
+                    copyToast.classList.add('opacity-100');
+                }, 10);
+
+                // Hide toast after 3 seconds
+                setTimeout(() => {
+                    copyToast.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        copyToast.classList.add('hidden');
+                    }, 300); // match transition duration
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
