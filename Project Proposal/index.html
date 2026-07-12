@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-[#FCFBF9]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWU Prompt Generator - เครื่องมือสร้าง Prompt หลักการและเหตุผลระดับมหาวิทยาลัย</title>
+  <!-- นำเข้า Tailwind CSS เพื่อการจัดหน้าตาแบบมินิมอลที่มีสีสันคลาสสิก -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ตั้งค่าฟอนต์ภาษาไทยที่สะอาดตา -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-full py-12 px-4 sm:px-6 lg:px-8 text-stone-850">
+  <div class="max-w-5xl mx-auto space-y-12">
+    
+    <!-- ส่วนหัวเว็บไซต์ (Vibrant & Classic Header) -->
+    <div class="text-center py-6">
+      <div class="inline-flex items-center justify-center mb-4">
+        <span class="text-xs font-semibold tracking-widest text-red-700 uppercase bg-red-50 border border-red-100/60 px-4 py-1 rounded-full shadow-sm">
+          Srinakharinwirot University
+        </span>
+      </div>
+      <h1 class="text-4xl font-extrabold text-stone-900 tracking-tight sm:text-5xl">
+        SWU <span class="text-red-600 font-light">Prompt Generator</span>
+      </h1>
+      <p class="mt-4 text-base text-stone-500 max-w-xl mx-auto font-light leading-relaxed">
+        เครื่องมืออำนวยความสะดวกในการสร้าง Prompt สำหรับให้ AI ช่วยร่าง <span class="font-medium text-red-600">หลักการและเหตุผล</span> ที่เชื่อมโยงกับทิศทางและพันธกิจของมหาวิทยาลัยศรีนครินทรวิโรฒ
+      </p>
+    </div>
+
+    <!-- ส่วนเนื้อหาหลักแบบ Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- คอลัมน์ซ้าย: ฟอร์มกรอกข้อมูล (5 Cols) -->
+      <div class="lg:col-span-5 bg-white border border-stone-200/80 rounded-xl p-6 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(139,92,26,0.05)]">
+        <div class="space-y-6">
+          <div class="border-b border-stone-100 pb-3">
+            <h2 class="text-lg font-semibold text-stone-900">ข้อมูลโครงการ</h2>
+            <p class="text-xs text-stone-400 font-light mt-0.5">กรอกข้อมูลเบื้องต้นเพื่อใช้เป็นฐานข้อมูลในการสร้าง Prompt</p>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- แจ้งเตือนเมื่อข้อมูลไม่ครบ (ซ่อนอยู่โดยเริ่มต้น) -->
+            <div id="warningBox" class="hidden bg-amber-50 border border-amber-200 text-amber-900 rounded-lg p-3.5 text-xs leading-relaxed">
+              <strong>คำแนะนำ:</strong> กรุณาระบุชื่อโครงการ หรือ วัตถุประสงค์ เพื่อให้ระบบเขียน Prompt ได้อย่างสมบูรณ์ที่สุด
+            </div>
+
+            <div>
+              <label for="projectName" class="block text-xs font-semibold text-stone-600 uppercase tracking-wider mb-1.5 flex justify-between">
+                <span>ชื่อโครงการ</span>
+                <span class="text-red-500 font-normal">จำเป็น</span>
+              </label>
+              <input
+                type="text"
+                id="projectName"
+                class="w-full rounded-lg border border-stone-200 bg-stone-50/30 px-3.5 py-2.5 text-sm focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-stone-300"
+                placeholder="เช่น โครงการพัฒนาทักษะดิจิทัลสำหรับบุคลากร"
+              />
+            </div>
+
+            <div>
+              <label for="strategy" class="block text-xs font-semibold text-stone-600 uppercase tracking-wider mb-1.5">
+                ประเด็นยุทธศาสตร์ มศว : รหัสตัวชี้วัด
+              </label>
+              <input
+                type="text"
+                id="strategy"
+                class="w-full rounded-lg border border-stone-200 bg-stone-50/30 px-3.5 py-2.5 text-sm focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-stone-300"
+                placeholder="เช่น ยุทธศาสตร์ที่ 1 ตัวชี้วัด 1.1.1"
+              />
+            </div>
+
+            <div>
+              <label for="brief" class="block text-xs font-semibold text-stone-600 uppercase tracking-wider mb-1.5 flex justify-between">
+                <span>วัตถุประสงค์ / แนวคิดเบื้องต้น</span>
+                <span class="text-red-500 font-normal">จำเป็น</span>
+              </label>
+              <textarea
+                id="brief"
+                rows="4"
+                class="w-full rounded-lg border border-stone-200 bg-stone-50/30 px-3.5 py-2.5 text-sm focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-stone-300 resize-none"
+                placeholder="บอกรายละเอียดหรือแนวคิดสั้นๆ ว่าจัดโครงการนี้เพื่อตอบโจทย์เรื่องใด"
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="target" class="block text-xs font-semibold text-stone-600 uppercase tracking-wider mb-1.5">
+                กลุ่มเป้าหมายผู้เข้าร่วม
+              </label>
+              <input
+                type="text"
+                id="target"
+                class="w-full rounded-lg border border-stone-200 bg-stone-50/30 px-3.5 py-2.5 text-sm focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-stone-300"
+                placeholder="เช่น นิสิตระดับปริญญาตรีและคณาจารย์ จำนวน 100 คน"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 mt-6 border-t border-stone-100 flex flex-col-reverse sm:flex-row gap-3">
+          <button
+            id="clearBtn"
+            class="w-full sm:w-1/3 bg-white border border-stone-200 hover:bg-stone-50 active:bg-stone-100 text-stone-600 font-semibold py-3 px-4 rounded-lg text-sm transition-all flex justify-center items-center gap-2 tracking-wide active:scale-[0.99]"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            ล้างข้อมูล
+          </button>
+          <button
+            id="generateBtn"
+            class="w-full sm:w-2/3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-3 px-4 rounded-lg text-sm transition-all flex justify-center items-center gap-2 tracking-wide shadow-md shadow-red-600/10 active:scale-[0.99]"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            สร้าง Prompt สำหรับ AI
+          </button>
+        </div>
+      </div>
+
+      <!-- คอลัมน์ขวา: ผลลัพธ์และคำแนะนำ (7 Cols) -->
+      <div class="lg:col-span-7 bg-white border border-stone-200/80 rounded-xl p-6 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_-4px_rgba(139,92,26,0.05)]">
+        <div class="space-y-4 flex-grow flex flex-col">
+          <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+            <div>
+              <h2 class="text-lg font-semibold text-stone-900">ผลลัพธ์โครงสร้างคำสั่ง</h2>
+              <p class="text-xs text-stone-400 font-light mt-0.5">คัดลอกข้อความไปวางลงใน ChatGPT, Claude หรือ Gemini</p>
+            </div>
+            
+            <!-- ปุ่มคัดลอก (จะแสดงสไตล์เด่นชัดเมื่อมีเนื้อหา) -->
+            <button
+              id="copyBtn"
+              class="hidden text-xs px-4 py-1.5 rounded-full font-medium transition-all duration-200 border flex items-center gap-1.5 bg-white hover:bg-stone-50 border-stone-200 text-stone-700"
+            >
+              <span id="copyBtnIcon">
+                <svg class="w-3.5 h-3.5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              </span>
+              <span id="copyBtnText">คัดลอก Prompt</span>
+            </button>
+          </div>
+          
+          <div class="flex-grow relative mt-2 min-h-[300px] flex flex-col">
+            <textarea
+              id="generatedPromptTextarea"
+              readonly
+              class="w-full flex-grow rounded-lg border border-stone-200 bg-stone-50/50 p-4 text-xs font-mono text-stone-650 resize-none focus:outline-none leading-relaxed"
+              placeholder="ระบบจะสร้าง Prompt ที่สอดคล้องกับยุทธศาสตร์ของมหาวิทยาลัยศรีนครินทรวิโรฒ โดยอัตโนมัติเมื่อกดปุ่มสร้าง Prompt..."
+            ></textarea>
+            
+            <!-- ไอคอนต้อนรับในช่องผลลัพธ์กรณีที่ยังไม่มีการสร้าง Prompt -->
+            <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center text-stone-300 pointer-events-none p-4">
+              <div class="p-3 bg-stone-100/50 rounded-full mb-3 text-red-500/80">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 113.536 0V21h2v-2.243a5.002 5.002 0 01-1-9.757" /></svg>
+              </div>
+              <p class="text-xs font-medium text-stone-500">พร้อมช่วยเหลือคุณสร้างสรรค์โครงการระดับมหาวิทยาลัย</p>
+              <p class="text-[11px] font-light text-stone-400 mt-1">กรอกรายละเอียดโครงการและกดปุ่มสร้าง Prompt ได้ทันที</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- การ์ดคำแนะนำเสริม (จะแสดงเฉพาะตอนสร้างเสร็จแล้วเพื่อความมินิมอลแต่คลาสสิก) -->
+        <div id="helperCard" class="hidden mt-6 border-t border-stone-100 pt-5">
+          <div class="rounded-xl bg-amber-50/50 border border-amber-100 p-4 flex gap-3">
+            <div class="flex-shrink-0 text-amber-600">
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <h4 class="text-xs font-semibold text-amber-900">แนะนำเพิ่มเติมสำหรับผู้ใช้</h4>
+              <p class="text-[11px] text-amber-800/80 mt-1 font-light leading-relaxed">
+                เมื่อนำ Prompt นี้ไปส่งต่อให้ AI คุณจะได้รับแบบร่าง "หลักการและเหตุผล" ที่มีความน่าเชื่อถือทางวิชาการและเป็นทางการสูง หากต้องการเพิ่มจุดเน้นส่วนตัว เช่น "เน้นการพัฒนาทักษะในศตวรรษที่ 21" หรือ "มุ่งเน้นการรับใช้สังคมแบบยั่งยืน" สามารถพิมพ์ปรับปรุงต่อในกล่อง AI ได้อย่างอิสระครับ
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ส่วนท้ายเว็บ (Classic Footer) -->
+    <div class="text-center pt-8 border-t border-stone-200/60">
+      <p class="text-xs text-stone-400 font-light tracking-wide">
+        มหาวิทยาลัยศรีนครินทรวิโรฒ (Srinakharinwirot University)
+      </p>
+    </div>
+
+  </div>
+
+  <!-- การควบคุมระบบแอปพลิเคชันผ่าน JavaScript -->
+  <script>
+    // สัญญาณวิสัยทัศน์และพันธกิจของ มศว
+    const SWU_VISION = "มหาวิทยาลัยศรีนครินทรวิโรฒ เป็นมหาวิทยาลัยแห่งการเรียนรู้เพื่อสังคม (Learning University for Society) มุ่งสร้างสรรค์นวัตกรรมและผลิตบัณฑิตที่มีคุณภาพเพื่อตอบสนองการเปลี่ยนแปลงของโลก";
+    const SWU_MISSIONS = [
+      "จัดการศึกษาเพื่อพัฒนาศักยภาพผู้เรียนให้เป็นพลเมืองที่มีคุณภาพของสังคมโลก มีคุณธรรมจริยธรรม และความรับผิดชอบต่อสังคม",
+      "สร้างสรรค์งานวิจัยและนวัตกรรมที่มีคุณภาพเพื่อการพัฒนาสังคมอย่างยั่งยืน และสามารถนำไปใช้ประโยชน์ได้จริง",
+      "ให้บริการวิชาการแก่สังคมเพื่อสร้างความเข้มแข็ง การพึ่งพาตนเอง และยกระดับคุณภาพชีวิตของประชาชน",
+      "ทำนุบำรุงศิลปะ วัฒนธรรม ความเป็นไทย และสืบสานภูมิปัญญาท้องถิ่น",
+      "บริหารจัดการตามหลักธรรมาภิบาล เพื่อนำไปสู่การเป็นองค์กรที่มีสมรรถนะสูงและมีความยั่งยืน"
+    ];
+
+    // อ้างอิง Element
+    const projectNameInput = document.getElementById('projectName');
+    const strategyInput = document.getElementById('strategy');
+    const briefInput = document.getElementById('brief');
+    const targetInput = document.getElementById('target');
+    
+    const generateBtn = document.getElementById('generateBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyBtnText = document.getElementById('copyBtnText');
+    const copyBtnIcon = document.getElementById('copyBtnIcon');
+    const warningBox = document.getElementById('warningBox');
+    
+    const promptTextarea = document.getElementById('generatedPromptTextarea');
+    const emptyState = document.getElementById('emptyState');
+    const helperCard = document.getElementById('helperCard');
+
+    let currentPromptText = "";
+
+    // ฟังก์ชันสร้างข้อความ Prompt
+    function generatePrompt() {
+      const projectName = projectNameInput.value.trim();
+      const strategy = strategyInput.value.trim();
+      const brief = briefInput.value.trim();
+      const target = targetInput.value.trim();
+
+      // ตรวจสอบความสมบูรณ์ขั้นต่ำ
+      if (!projectName && !brief) {
+        warningBox.classList.remove('hidden');
+        return;
+      }
+      
+      warningBox.classList.add('hidden');
+
+      // เทมเพลตสำหรับกระตุ้น AI (อัปเดตเป็นบริบท มศว)
+      const promptTemplate = `คุณคือผู้เชี่ยวชาญด้านการเขียนแบบเสนอโครงการ วางแผนกลยุทธ์ และการบริหารการศึกษาระดับอุดมศึกษา
+โปรดช่วยเขียน "หลักการและเหตุผล" สำหรับแบบเสนอโครงการนี้ โดยให้ใช้ภาษาที่เป็นทางการ น่าเชื่อถือ เชิงวิชาการ และร้อยเรียงอย่างสลวยงาม (ความยาวประมาณ 3-4 ย่อหน้า)
+
+ข้อมูลของโครงการมีดังนี้:
+- ชื่อโครงการ: ${projectName || '[ไม่ได้ระบุ]'}
+- วัตถุประสงค์/แนวคิดเบื้องต้น: ${brief || '[ไม่ได้ระบุ]'}
+- กลุ่มเป้าหมาย: ${target || '[ไม่ได้ระบุ]'}
+- ประเด็นยุทธศาสตร์ มศว / รหัสตัวชี้วัด: ${strategy || '[ไม่ได้ระบุ]'}
+
+ข้อกำหนดสำคัญ:
+การเขียนหลักการและเหตุผล "ต้อง" สอดคล้อง เชื่อมโยง และสนับสนุน "วิสัยทัศน์" และ "พันธกิจ" ของมหาวิทยาลัยศรีนครินทรวิโรฒ ดังต่อไปนี้:
+
+วิสัยทัศน์:
+"${SWU_VISION}"
+
+พันธกิจ:
+${SWU_MISSIONS.map((m, i) => `${i + 1}. ${m}`).join('\n')}
+
+โครงสร้างการเขียน "หลักการและเหตุผล" ที่แนะนำ:
+ย่อหน้าที่ 1: กล่าวถึงบริบททั่วไป ความสำคัญของปัญหา นโยบายระดับชาติ ทิศทางการพัฒนาการอุดมศึกษา หรือสถานการณ์ปัจจุบันที่ทำให้เกิดโครงการนี้
+ย่อหน้าที่ 2: เชื่อมโยงเข้าสู่วิสัยทัศน์ พันธกิจ ของมหาวิทยาลัยศรีนครินทรวิโรฒ และตอบสนองต่อประเด็นยุทธศาสตร์/ตัวชี้วัด (${strategy || 'ที่เกี่ยวข้อง'})
+ย่อหน้าที่ 3: อธิบายแนวทางการแก้ปัญหาหรือการพัฒนาผ่านโครงการนี้ (ทำไมต้องทำ ทำแล้วจะเกิดผลดีอย่างไรต่อกลุ่มเป้าหมาย นิสิต หรือบุคลากร)
+ย่อหน้าที่ 4: สรุปผลลัพธ์ นวัตกรรม การรับใช้สังคม และความคุ้มค่าที่จะเกิดขึ้นหากโครงการนี้สำเร็จ`;
+
+      currentPromptText = promptTemplate;
+      promptTextarea.value = promptTemplate;
+
+      // ปรับปรุงการมองเห็นองค์ประกอบต่าง ๆ
+      emptyState.classList.add('hidden');
+      copyBtn.classList.remove('hidden');
+      helperCard.classList.remove('hidden');
+
+      // เลื่อนหน้าจอเล็กน้อยในหน้าจอมือถือเพื่อให้เห็นผลลัพธ์
+      if (window.innerWidth < 1024) {
+        promptTextarea.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // ฟังก์ชันล้างข้อมูล
+    function clearData() {
+      // ล้างค่าในฟอร์ม
+      projectNameInput.value = '';
+      strategyInput.value = '';
+      briefInput.value = '';
+      targetInput.value = '';
+
+      // ล้างผลลัพธ์ที่สร้างไว้
+      currentPromptText = '';
+      promptTextarea.value = '';
+
+      // คืนสถานะ UI กลับเป็นค่าเริ่มต้น
+      warningBox.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      copyBtn.classList.add('hidden');
+      helperCard.classList.add('hidden');
+      
+      // เลื่อนจอกลับไปด้านบนสุดหากเป็นมือถือ
+      if (window.innerWidth < 1024) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // ฟังก์ชันคัดลอกข้อมูลแบบปลอดภัย
+    function copyToClipboard() {
+      if (!currentPromptText) return;
+
+      try {
+        const tempTextArea = document.createElement("textarea");
+        tempTextArea.value = currentPromptText;
+        
+        // กำหนดตำแหน่งและสไตล์ชั่วคราวให้พ้นสายตา
+        tempTextArea.style.position = "fixed";
+        tempTextArea.style.top = "0";
+        tempTextArea.style.left = "0";
+        tempTextArea.style.width = "2em";
+        tempTextArea.style.height = "2em";
+        tempTextArea.style.padding = "0";
+        tempTextArea.style.border = "none";
+        tempTextArea.style.outline = "none";
+        tempTextArea.style.boxShadow = "none";
+        tempTextArea.style.background = "transparent";
+        
+        document.body.appendChild(tempTextArea);
+        tempTextArea.focus();
+        tempTextArea.select();
+        
+        const success = document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+
+        if (success) {
+          // เปลี่ยนสถานะปุ่มเป็นสีเขียวมรกตคลาสสิกเพื่อแสดงผลงานที่สำเร็จ
+          copyBtnText.innerText = "คัดลอกเรียบร้อย!";
+          copyBtn.classList.replace('text-stone-700', 'text-emerald-700');
+          copyBtn.classList.replace('bg-white', 'bg-emerald-50');
+          copyBtn.classList.replace('border-stone-200', 'border-emerald-200');
+          
+          copyBtnIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+
+          // คืนสถานะปุ่มเดิมหลังจากผ่านไป 3 วินาที
+          setTimeout(() => {
+            copyBtnText.innerText = "คัดลอก Prompt";
+            copyBtn.classList.replace('text-emerald-700', 'text-stone-700');
+            copyBtn.classList.replace('bg-emerald-50', 'bg-white');
+            copyBtn.classList.replace('border-emerald-200', 'border-stone-200');
+            copyBtnIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>`;
+          }, 3000);
+        } else {
+          console.error("ExecCommand copy was unsuccessful");
+        }
+      } catch (err) {
+        console.error("Failed to copy using fallback method: ", err);
+      }
+    }
+
+    // ลงทะเบียนอีเวนต์เมื่อกดปุ่ม
+    generateBtn.addEventListener('click', generatePrompt);
+    clearBtn.addEventListener('click', clearData);
+    copyBtn.addEventListener('click', copyToClipboard);
+  </script>
+</body>
+</html>
