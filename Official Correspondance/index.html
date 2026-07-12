@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Generator สร้างหนังสือราชการ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f3f4f6; /* Gray 100 */
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            color: #374151; /* Gray 700 */
+        }
+        
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen py-8 px-4 sm:px-6 lg:px-8 flex justify-center items-start">
+
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-primary-600 text-white p-6 sm:p-8 text-center">
+            <h1 class="text-3xl font-bold mb-2 flex justify-center items-center gap-3">
+                <i class="fa-solid fa-file-signature"></i> 
+                Prompt Generator
+            </h1>
+            <p class="text-primary-100 text-lg">เครื่องมือช่วยสร้างคำสั่ง (Prompt) สำหรับ AI เพื่อร่างหนังสือราชการ</p>
+        </div>
+
+        <div class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Left Column: Input Form -->
+            <div>
+                <h2 class="text-xl font-bold mb-6 text-gray-800 border-b pb-2 border-gray-200">
+                    <i class="fa-solid fa-pen-to-square mr-2 text-primary-500"></i>ข้อมูลหนังสือราชการ
+                </h2>
+                
+                <form id="promptForm" class="space-y-4">
+                    <!-- ประเภทหนังสือราชการ -->
+                    <div>
+                        <label for="docType" class="form-label">ประเภทหนังสือราชการ <span class="text-red-500">*</span></label>
+                        <select id="docType" class="form-input bg-white" required>
+                            <option value="" disabled selected>เลือกประเภทหนังสือ...</option>
+                            <option value="หนังสือภายใน (บันทึกข้อความ)">หนังสือภายใน (บันทึกข้อความ)</option>
+                            <option value="หนังสือภายนอก (หนังสือตรา มศว)">หนังสือภายนอก (หนังสือตรา มศว)</option>
+                            <option value="หนังสือประทับตรา">หนังสือประทับตรา</option>
+                            <option value="หนังสือสั่งการ (คำสั่ง/ระเบียบ/ข้อบังคับ)">หนังสือสั่งการ (คำสั่ง/ระเบียบ/ข้อบังคับ)</option>
+                            <option value="หนังสือประชาสัมพันธ์ (ประกาศ/แถลงการณ์/ข่าว)">หนังสือประชาสัมพันธ์ (ประกาศ/แถลงการณ์/ข่าว)</option>
+                        </select>
+                    </div>
+
+                    <!-- ชื่อหน่วยงาน/ต้นสังกัด -->
+                    <div>
+                        <label for="senderOrg" class="form-label">ส่วนราชการเจ้าของเรื่อง (ผู้ส่ง) <span class="text-red-500">*</span></label>
+                        <input type="text" id="senderOrg" class="form-input" placeholder="เช่น สำนักนวัตกรรมการเรียนรู้ มศว" required>
+                    </div>
+
+                    <!-- ชื่อผู้รับ/หน่วยงานผู้รับ -->
+                    <div>
+                        <label for="receiver" class="form-label">เรียน (ผู้รับ) <span class="text-red-500">*</span></label>
+                        <input type="text" id="receiver" class="form-input" placeholder="เช่น ผู้อำนวยการโรงเรียน..." required>
+                    </div>
+
+                    <!-- เรื่อง (Subject) -->
+                    <div>
+                        <label for="subject" class="form-label">เรื่อง <span class="text-red-500">*</span></label>
+                        <input type="text" id="subject" class="form-input" placeholder="หัวข้อสั้น กระชับ ชัดเจน" required>
+                    </div>
+
+                    <!-- สิ่งที่ส่งมาด้วย -->
+                    <div>
+                        <label for="attachments" class="form-label">สิ่งที่ส่งมาด้วย (ถ้าไม่มีให้เว้นว่าง)</label>
+                        <input type="text" id="attachments" class="form-input" placeholder="เช่น ๑. กำหนดการ จำนวน ๑ ฉบับ">
+                    </div>
+
+                    <!-- ข้อความเนื้อหา -->
+                    <div>
+                        <label for="content" class="form-label">จุดประสงค์ และ ข้อความที่ต้องการแจ้ง <span class="text-red-500">*</span></label>
+                        <textarea id="content" rows="4" class="form-input resize-none" placeholder="อธิบายรายละเอียด เหตุผลที่ส่งมา จุดประสงค์ และข้อสั่งการหรือสิ่งที่ต้องการให้ผู้รับดำเนินการ..." required></textarea>
+                    </div>
+
+                    <!-- การลงชื่อ -->
+                    <div>
+                        <label for="signatory" class="form-label">การลงชื่อ (ผู้ลงนาม) <span class="text-red-500">*</span></label>
+                        <input type="text" id="signatory" class="form-input" placeholder="เช่น (นายสมชาย รักดี) ผู้อำนวยการสำนัก..." required>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-4 rounded-lg transition-colors flex justify-center items-center gap-2 mt-4 shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> สร้าง Prompt สำหรับ AI
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Column: Result Box -->
+            <div class="flex flex-col h-full">
+                <h2 class="text-xl font-bold mb-6 text-gray-800 border-b pb-2 border-gray-200">
+                    <i class="fa-solid fa-robot mr-2 text-primary-500"></i>ผลลัพธ์ Prompt
+                </h2>
+                
+                <div class="relative flex-grow flex flex-col">
+                    <div id="emptyState" class="absolute inset-0 flex flex-col justify-center items-center text-gray-400 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 z-10 transition-opacity duration-300">
+                        <i class="fa-solid fa-arrow-left-long text-4xl mb-3"></i>
+                        <p class="text-center px-4">กรอกข้อมูลด้านซ้ายให้ครบถ้วน<br>แล้วกด "สร้าง Prompt สำหรับ AI"</p>
+                    </div>
+                    
+                    <textarea id="promptResult" class="form-input flex-grow min-h-[400px] h-full resize-none font-mono text-sm leading-relaxed p-4 bg-gray-50 text-gray-700 focus:bg-white" readonly></textarea>
+                </div>
+                
+                <!-- ปุ่มคัดลอกแบบใหม่ ใหญ่และชัดเจน -->
+                <button id="copyBtn" class="mt-4 w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3.5 px-4 rounded-lg transition-colors flex justify-center items-center gap-2 shadow-md text-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fa-regular fa-copy"></i> คัดลอก Prompt
+                </button>
+                
+                <div class="mt-4 text-sm text-gray-500 bg-blue-50 p-3 rounded-lg border border-blue-100 flex gap-3">
+                    <i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i>
+                    <p>นำ Prompt ด้านบนไปวางใน AI Chatbot (เช่น ChatGPT, Gemini, Claude) เพื่อให้ AI ร่างหนังสือราชการตามรูปแบบที่ถูกต้อง</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('promptForm');
+            const promptResult = document.getElementById('promptResult');
+            const emptyState = document.getElementById('emptyState');
+            const copyBtn = document.getElementById('copyBtn');
+
+            // ฐานข้อมูล Reference Link
+            const referenceLink = "https://docs.google.com/document/d/1zK30aC3pKgX9se2H_vLQ8nXsghVu0I8pspF85Bgu_ow/edit?usp=sharing";
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // ดึงข้อมูลจากฟอร์ม
+                const docType = document.getElementById('docType').value;
+                const senderOrg = document.getElementById('senderOrg').value;
+                const receiver = document.getElementById('receiver').value;
+                const subject = document.getElementById('subject').value;
+                const attachments = document.getElementById('attachments').value;
+                const content = document.getElementById('content').value;
+                const signatory = document.getElementById('signatory').value;
+
+                // จัดการส่วน "สิ่งที่ส่งมาด้วย" (ถ้ามีหรือไม่มี)
+                let attachmentText = "";
+                if (attachments.trim() !== "") {
+                    attachmentText = `\n- สิ่งที่ส่งมาด้วย: ${attachments}`;
+                } else {
+                    attachmentText = `\n- สิ่งที่ส่งมาด้วย: (ไม่มี)`;
+                }
+
+                // สร้าง Prompt String
+                const promptTemplate = `คุณคือผู้เชี่ยวชาญด้านงานสารบรรณและการเขียนหนังสือราชการไทย หน้าที่ของคุณคือการร่างหนังสือราชการตามข้อมูลที่กำหนดให้ โดยต้องใช้รูปแบบ ภาษาราชการ และวิธีการเขียนที่ถูกต้องตาม "ระเบียบสำนักนายกรัฐมนตรีว่าด้วยงานสารบรรณ"
+
+คำสั่ง:
+1. ให้คุณเข้าไปศึกษาหลักการเขียน รูปแบบ และตัวอย่างหนังสือราชการจากเอกสารอ้างอิงนี้ก่อน:
+   ${referenceLink}
+2. เมื่อศึกษาและทำความเข้าใจรูปแบบแล้ว ให้ร่างหนังสือราชการตามข้อมูลด้านล่างนี้:
+
+[ข้อมูลสำหรับร่างหนังสือราชการ]
+- ประเภทหนังสือ: ${docType}
+- ส่วนราชการเจ้าของเรื่อง (ผู้ส่ง): ${senderOrg}
+- เรียน (ผู้รับ): ${receiver}
+- เรื่อง: ${subject}${attachmentText}
+- จุดประสงค์และเนื้อหาที่ต้องการแจ้ง: 
+  ${content}
+- ชื่อ-ตำแหน่งผู้ลงนาม: ${signatory}
+
+ข้อกำหนดเพิ่มเติม:
+- ให้จัดวางโครงสร้างและย่อหน้าให้เสมือนจริงมากที่สุด (เช่น ส่วนหัว, การอ้างอิง(ถ้ามี), ภาคเหตุ, ภาคความประสงค์, ภาคสรุป, คำลงท้าย)
+- ใช้ถ้อยคำ ภาษาราชการที่สละสลวย กระชับ ชัดเจน และเหมาะสมกับระดับของผู้รับ
+- เลือกใช้คำขึ้นต้นและคำลงท้ายให้ถูกต้องตามประเภทหนังสือราชการและระดับตำแหน่งของผู้รับตามระเบียบงานสารบรรณ
+- หากเป็นหนังสือภายใน (บันทึกข้อความ) ไม่ต้องมีคำลงท้าย แต่หากเป็นหนังสือภายนอกให้มีคำลงท้ายที่เหมาะสม
+- สร้างเนื้อหาออกมาเฉพาะตัวร่างหนังสือราชการเท่านั้น ไม่ต้องอธิบายวิธีการเขียน`;
+
+                // แสดงผลลัพธ์
+                promptResult.value = promptTemplate;
+                
+                // ซ่อน Empty State และเปิดปุ่ม Copy
+                emptyState.style.opacity = '0';
+                setTimeout(() => {
+                    emptyState.style.display = 'none';
+                }, 300);
+                
+                copyBtn.disabled = false;
+                
+                // เลื่อนหน้าจอลงมาให้เห็นผลลัพธ์บนมือถือ
+                if (window.innerWidth < 1024) {
+                    promptResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+
+            // ฟังก์ชัน Copy to Clipboard
+            copyBtn.addEventListener('click', function() {
+                if (promptResult.value.trim() === "") return;
+
+                // เลือกข้อความ
+                promptResult.select();
+                promptResult.setSelectionRange(0, 99999); // สำหรับมือถือ
+
+                try {
+                    // Copy ลง Clipboard
+                    document.execCommand('copy');
+                    
+                    // ยกเลิกการเลือก
+                    window.getSelection().removeAllRanges();
+                    
+                    // เปลี่ยนสถานะปุ่มเป็นสีเขียวเพื่อแสดงว่าคัดลอกสำเร็จแล้ว
+                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> คัดลอกสำเร็จแล้ว!';
+                    copyBtn.classList.remove('bg-gray-800', 'hover:bg-gray-900');
+                    copyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+
+                    // คืนค่าปุ่มเดิมหลังจาก 2 วินาที
+                    setTimeout(function() {
+                        copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> คัดลอก Prompt';
+                        copyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        copyBtn.classList.add('bg-gray-800', 'hover:bg-gray-900');
+                    }, 2000);
+                } catch (err) {
+                    console.error('ไม่สามารถคัดลอกข้อความได้: ', err);
+                    alert('เกิดข้อผิดพลาด ไม่สามารถคัดลอกได้ กรุณาคลุมดำและคัดลอกด้วยตนเอง');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
